@@ -1,8 +1,10 @@
 const createIndDynamodb = require('../managers/create_record')
+const sendSms = require('../managers/send_sms')
+
 module.exports.create = async (event, context) => {
     const timestamp = new Date();
     const data = JSON.parse(event.body);
-    if (typeof data.message !== 'string' || typeof data.message !== 'string') {
+    if (typeof data.message !== 'string' || typeof data.phone_number !== 'string') {
         callback(null, {
             statusCode: 400,
             headers: {
@@ -12,12 +14,14 @@ module.exports.create = async (event, context) => {
         });
         return;
     }
-    try {
+    try {   
+        const sentSms = await sendSms({ phone_number: data.phone_number, message: data.message })
+        console.log(sentSms)
         const createdItem = await createIndDynamodb({
             message: data.message,
-            phone_number: data.phone_number
+            phone_number: data.phone_number,
+            ...sentSms
         })
-        console.log(createdItem)
         return {
             statusCode: 200,
             body: JSON.stringify(createdItem),

@@ -1,7 +1,7 @@
 const uuid = require('uuid')
 const dynamodb = require('../aws_clients/dynamo')
 
-module.exports = async({message, phone_number}) => {
+module.exports = async({message, phone_number, aws_request_id, aws_message_id, aws_error}) => {
     const timestamp = new Date()
     const params = {
         TableName: process.env.DYNAMODB_TABLE || 'sms api',
@@ -9,18 +9,17 @@ module.exports = async({message, phone_number}) => {
             id: uuid.v4(),
             message: message,
             phone_number: phone_number,
-            aws_request_id: "fake",
-            aws_error: "fake",
+            aws_request_id,
+            aws_error,
             checked: false,
             createdAt: timestamp,
             updatedAt: timestamp,
-        },
-        ReturnValues: "ALL_OLD"
-    };
+        }
+   };
     return new Promise((resolve, reject) => {
         dynamodb.put(params, function(err, data) {
             if (err) reject(err); // an error occurred
-            else     resolve(params);           // successful response
+            else resolve(params);           // successful response
         
           });  
     })
