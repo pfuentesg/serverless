@@ -13,7 +13,6 @@ module.exports.create = async (event, context) => {
     }
     try {   
         const sentSms = await sendSms({ phone_number: data.phone_number, message: data.message })
-        console.log(sentSms)
         const createdItem = await createIndDynamodb({
             message: data.message,
             phone_number: data.phone_number,
