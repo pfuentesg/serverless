@@ -1,10 +1,10 @@
-const getReccord = require('../managers/get_one_reccord')
+const getRecord = require('../managers/get_one_reccord')
 
 module.exports.get = async(event) =>{
     const resourceId = event.pathParameters.id
-    const reccordData = await getReccord(resourceId)
+    const recordData = await getRecord(resourceId)
     return{
         statusCode: 200,
-        body: JSON.stringify(reccordData),
-    } 
+        body: JSON.stringify(recordData),
+    }
 }

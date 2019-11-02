@@ -2,7 +2,6 @@ const publishToSns = require('../aws_clients/publish_sms')
 module.exports = async({ phone_number, message }) => {
 try{
     const publishedMessage = await publishToSns({message, phone_number})
-    console.log(publishedMessage)
     return Promise.resolve({
         status: 'SUCCESS',
         aws_request_id : publishedMessage.ResponseMetadata.RequestId,

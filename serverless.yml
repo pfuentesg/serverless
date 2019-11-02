@@ -7,7 +7,6 @@ plugins:
   - serverless-offline
   - serverless-offline-sns
 
-
 custom:
   dynamodb:
     stages:
@@ -21,7 +20,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs
+  runtime: nodejs10.x
   region: 'us-east-1'
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
