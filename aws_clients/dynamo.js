@@ -1,10 +1,9 @@
  
-'use strict';
+'use strict'
 
-const AWS = require('aws-sdk'); // eslint-disable-line import/no-extraneous-dependencies
+const AWS = require('aws-sdk')
 
 
-// connect to local DB if running offline
  const options = {
     region: 'localhost',
     endpoint: 'http://localhost:8000',

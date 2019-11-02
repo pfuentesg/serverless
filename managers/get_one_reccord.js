@@ -5,7 +5,7 @@ module.exports= (id) => {
         dynamodb.get({ TableName: process.env.DYNAMODB_TABLE, Key: {id}  }, (error, result) => {
             if (error) reject(error)
             else resolve(result)
-          });
+          })
     })
  
 }

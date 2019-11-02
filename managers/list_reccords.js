@@ -5,7 +5,7 @@ module.exports= () => {
         dynamodb.scan({ TableName: process.env.DYNAMODB_TABLE  }, (error, result) => {
             if (error) reject(error)
             else resolve(result)
-          });
+          })
     })
  
 }

@@ -2,17 +2,14 @@ const createIndDynamodb = require('../managers/create_record')
 const sendSms = require('../managers/send_sms')
 
 module.exports.create = async (event, context) => {
-    const timestamp = new Date();
-    const data = JSON.parse(event.body);
+    const timestamp = new Date()
+    const data = JSON.parse(event.body)
     if (typeof data.message !== 'string' || typeof data.phone_number !== 'string') {
-        callback(null, {
+        return {
             statusCode: 400,
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: 'Couldn\'t create the todo item.',
-        });
-        return;
+            body: 'Validation failed: body should contain message and phone number',
+        }
+        
     }
     try {   
         const sentSms = await sendSms({ phone_number: data.phone_number, message: data.message })
@@ -25,12 +22,12 @@ module.exports.create = async (event, context) => {
         return {
             statusCode: 200,
             body: JSON.stringify(createdItem),
-        };
+        }
     }catch (err) {
     console.error('Unexpected error creating reccord',  { err })
     return{
         statusCode: 500,
         body: JSON.stringify(err),
-    };
+    }
 }
 }
